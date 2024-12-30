@@ -69,18 +69,18 @@ const getProductsByUserId = async (id = undefined) => {
 
 const addNewUser = async ({ full_name, password }, trx = knex) => {
   try {
-    const result = await trx(MBLAPP_USERS).insert({ full_name, password });
-    return result;
+    const results = await trx(MBLAPP_USERS).insert({ full_name, password }).returning('*');
+    return results[0];
   } catch (error) {
     console.log(`addNewUser ERROR :: ${error.message}`);
     throw new Error(error.message);
   }
 };
 
-const addProduct = async ({ product_name }, trx = knex) => {
+const addProduct = async ({ product_name, calories }, trx = knex) => {
   try {
-    const result = await trx(MBLAPP_PRODUCTS).insert({ product_name });
-    return result;
+    const results = await trx(MBLAPP_PRODUCTS).insert({ product_name, calories }).returning('*');
+    return results[0];
   } catch (error) {
     console.log(`addProduct ERROR :: ${error.message}`);
     throw new Error(error.message);
@@ -89,11 +89,11 @@ const addProduct = async ({ product_name }, trx = knex) => {
 
 const addProductEmployeeXref = async ({ product_id, user_id }, trx = knex) => {
   try {
-    const result = await trx(MBLAPP_USER_PRODUCT_XREF).insert({
+    const results = await trx(MBLAPP_USER_PRODUCT_XREF).insert({
       product_id,
       user_id,
-    });
-    return result;
+    }).returning('*');
+    return results[0];
   } catch (error) {
     console.log(`addProductEmployeeXref ERROR :: ${error.message}`);
     throw new Error(error.message);

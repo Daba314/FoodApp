@@ -6,6 +6,7 @@ module.exports = Object.freeze({
   app: {
     PORT: process.env.PORT,
     COOKIE_SECRET: process.env.COOKIE_SECRET,
+    ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS
   },
   db: {
     main: {
